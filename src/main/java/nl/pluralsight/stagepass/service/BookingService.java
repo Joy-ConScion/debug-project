@@ -44,6 +44,14 @@ public class BookingService {
         // Compute total price
         booking.setTotalPrice(concert.getTicketPrice().multiply(BigDecimal.valueOf((booking.getNumberOfTickets()))));
 
+        // Compute available seats
+        if (concert.getAvailableSeats() < booking.getNumberOfTickets()){
+            throw new RuntimeException("Apologies, there are not enough seats available.");
+        }
+        //Update available seat
+        concert.setAvailableSeats(concert.getAvailableSeats() - booking.getNumberOfTickets());
+        concertRepository.save(concert);
+
         // Set booking date and concert reference
         booking.setBookingDate(LocalDate.now());
         booking.setConcert(concert);

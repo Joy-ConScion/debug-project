@@ -42,7 +42,7 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("Concert not found"));
 
         // Compute total price
-        booking.setTotalPrice(BigDecimal.ZERO);
+        booking.setTotalPrice(concert.getTicketPrice().multiply(BigDecimal.valueOf((booking.getNumberOfTickets()))));
 
         // Set booking date and concert reference
         booking.setBookingDate(LocalDate.now());
